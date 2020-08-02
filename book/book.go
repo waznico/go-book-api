@@ -3,6 +3,7 @@ package book
 import (
 	"github.com/gofiber/fiber"
 	"github.com/jinzhu/gorm"
+	"github.com/waznico/go-book-api/internal/database"
 )
 
 // Book model struct
@@ -15,7 +16,10 @@ type Book struct {
 
 // GetBooks returns all books stored in database
 func GetBooks(ctx *fiber.Ctx) {
-	ctx.Send("get all books")
+	db := database.DBConn
+	var books []Book
+	db.Find(&books)
+	ctx.JSON(books)
 }
 
 // GetBook returns single book with given id in database if it exists
