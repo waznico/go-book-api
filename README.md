@@ -1,3 +1,5 @@
+![Go](https://github.com/waznico/go-book-api/workflows/Go/badge.svg)
+
 # Go Book API Example
 A simple service to manage a book library with title, author and rating. This is an example API written in Go and using the frameworks fiber (API) and gorm (Database ORM Framework). It uses a SQLite3 database to store all data and supports all CRUD options on the book endpoint. I also implemented error handling and returning status codes to demonstrate how it could be done.
 
