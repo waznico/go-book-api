@@ -24,7 +24,14 @@ func GetBooks(ctx *fiber.Ctx) {
 
 // GetBook returns single book with given id in database if it exists
 func GetBook(ctx *fiber.Ctx) {
-	ctx.Send("get single book")
+	id := ctx.Params("id")
+	db := database.DBConn
+	var book Book
+	db.Find(&book, id)
+	if book.Title == "" {
+		//TODO Error handling
+	}
+	ctx.JSON(book)
 }
 
 // NewBook adds a new book into database
