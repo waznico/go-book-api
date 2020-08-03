@@ -16,6 +16,9 @@ The following endpoints are currently exposed:
 | /api/v1/book/6 (PUT)         | Updates book with id 6 if available |
 | /api/v1/book/6 (DELETE)      | Deletes book with id 6 if available |
 
+## Swagger
+This api supports swagger. You can access it simply by calling localhost:3000/swagger and have a look into the api documentation.
+
 # Examples
 Here are some examples for the requests.
 
