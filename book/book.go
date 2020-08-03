@@ -17,7 +17,12 @@ type Book struct {
 	Rating int    `json:"rating"`
 }
 
-// GetBooks returns all books stored in database
+// GetBooks godoc
+// @Summary Get books stored in database
+// @Description Get all books stored in database
+// @Produce  json
+// @Success 200 {object} []Book
+// @Router /books [get]
 func GetBooks(ctx *fiber.Ctx) {
 	db := database.DBConn
 	var books []Book
@@ -25,7 +30,16 @@ func GetBooks(ctx *fiber.Ctx) {
 	ctx.JSON(books)
 }
 
-// GetBook returns single book with given id in database if it exists
+// GetBook godoc
+// @Summary Get book with id [id]
+// @Description Returns single book with given id in database if it exists
+// @Accept  json
+// @Produce  json
+// @Param id path int true "Book ID"
+// @Success 200 {object} Book
+// @Failure 400 "Bad request"
+// @Failure 404 "Not found"
+// @Router /book/{id} [get]
 func GetBook(ctx *fiber.Ctx) {
 	id := ctx.Params("id")
 	if id == "" {
@@ -44,7 +58,15 @@ func GetBook(ctx *fiber.Ctx) {
 	ctx.JSON(book)
 }
 
-// NewBook adds a new book into database
+// NewBook godoc
+// @Summary Adds a new book
+// @Description Adds a new book into database
+// @Accept  json
+// @Produce	json
+// @Param book body Book true "Book object to insert into"
+// @Success 200 {object} Book
+// @Failure 400 "Bad request"
+// @Router /book [post]
 func NewBook(ctx *fiber.Ctx) {
 	var bookIn Book
 	err := ctx.BodyParser(&bookIn)
@@ -58,7 +80,16 @@ func NewBook(ctx *fiber.Ctx) {
 	ctx.JSON(bookIn)
 }
 
-// UpdateBook updates the book of the given id if existent
+// UpdateBook godoc
+// @Summary Updates existing book
+// @Description Updates the book of the given id if it exists. Otherwise an error will be thrown.
+// @Accept  json
+// @Produce	json
+// @Param book body Book true "Book object with updated props (could also only an object containing the updated props)"
+// @Success 200 {object} Book "Updated book"
+// @Failure 400 "Bad request"
+// @Failure 404 "Not found"
+// @Router /book/{id} [put]
 func UpdateBook(ctx *fiber.Ctx) {
 	paramID := ctx.Params("id")
 	_, parsErr := strconv.Atoi(paramID)
@@ -87,7 +118,16 @@ func UpdateBook(ctx *fiber.Ctx) {
 	ctx.JSON(bookUp)
 }
 
-// DeleteBook deletes book of the given id
+// DeleteBook godoc
+// @Summary Deletes a book
+// @Description Deletes book with the given id if it exists in database.
+// @Accept  json
+// @Produce  json
+// @Param id path int true "Book ID"
+// @Success 200 "OK"
+// @Failure 400 "Bad request"
+// @Failure 404 "Not found"
+// @Router /book/{id} [delete]
 func DeleteBook(ctx *fiber.Ctx) {
 	id := ctx.Params("id")
 	if id == "" {

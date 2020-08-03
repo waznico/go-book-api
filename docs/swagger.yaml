@@ -1,0 +1,124 @@
+basePath: /api/v1/
+definitions:
+  book.Book:
+    properties:
+      author:
+        type: string
+      rating:
+        type: integer
+      title:
+        type: string
+    type: object
+host: localhost:3000
+info:
+  contact:
+    name: NiWA Dev
+  description: It's a sample API to demostrate how it could be created with go. You can manage books with it.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Go Book API
+  version: "1.0"
+paths:
+  /book:
+    post:
+      consumes:
+      - application/json
+      description: Adds a new book into database
+      parameters:
+      - description: Book object to insert into
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/book.Book'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/book.Book'
+        "400":
+          description: Bad request
+      summary: Adds a new book
+  /book/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes book with the given id if it exists in database.
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad request
+        "404":
+          description: Not found
+      summary: Deletes a book
+    get:
+      consumes:
+      - application/json
+      description: Returns single book with given id in database if it exists
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/book.Book'
+        "400":
+          description: Bad request
+        "404":
+          description: Not found
+      summary: Get book with id [id]
+    put:
+      consumes:
+      - application/json
+      description: Updates the book of the given id if it exists. Otherwise an error will be thrown.
+      parameters:
+      - description: Book object with updated props (could also only an object containing the updated props)
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/book.Book'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Updated book
+          schema:
+            $ref: '#/definitions/book.Book'
+        "400":
+          description: Bad request
+        "404":
+          description: Not found
+      summary: Updates existing book
+  /books:
+    get:
+      description: Get all books stored in database
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/book.Book'
+            type: array
+      summary: Get books stored in database
+swagger: "2.0"
